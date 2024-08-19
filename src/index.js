@@ -1,3 +1,23 @@
+window.Telegram.WebApp.ready();
+
+const tg = window.Telegram.WebApp;
+
+// 获取当前用户信息并打印到控制台
+console.log(tg.initDataUnsafe.user);
+
+// 设置应用程序背景颜色
+tg.setBackgroundColor("#ffffff");
+
+// 设置主按钮（可选）
+tg.MainButton.text = "Confirm";
+tg.MainButton.show();
+
+tg.MainButton.onClick(() => {
+  tg.sendData("Some data here"); // 向 Telegram 发送数据
+  tg.close(); // 关闭应用程序
+});
+
+//tg小程序
 MS_IN_ONE_LEAP_YEAR = 31622400000
 SEC_IN_ONE_MONTH = 2592000
 
