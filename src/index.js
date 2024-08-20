@@ -5,22 +5,17 @@ const domainListElement = document.getElementById('domain-list');
 domains.forEach(domain => {
     const domainItem = document.createElement('div');
     domainItem.className = 'domain-item';
-    domainItem.innerHTML = `
-        <span>${domain.name}</span>
-        <button ${domain.status === 'sold' ? 'disabled' : ''} class="btn ${domain.status === 'sold' ? 'btn-sold' : 'btn-buy'}">
-            ${domain.status === 'sold' ? 'Sold' : 'Buy'}
-        </button>
-    `;
+    domainItem.innerHTML = `<span class="${domain.status === 'sold' ? 'sold-domain' : 'buy-domain'}">${domain.name}</span>`;
 
-    // 如果域名可购买，添加购买事件
     if (domain.status === 'available') {
-        domainItem.querySelector('.btn-buy').addEventListener('click', () => {
+        domainItem.querySelector('.buy-domain').addEventListener('click', () => {
             initiatePayment(domain.name, 40); // 40 TON
         });
     }
 
     domainListElement.appendChild(domainItem);
 });
+
 
 window.Telegram.WebApp.ready();
 
