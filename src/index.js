@@ -7,6 +7,59 @@ function initiatePayment(domain, amount) {
 import { domains } from './domains.js'; // 引入域名数据
 
 const domainListElement = document.getElementById('domain-list');
+const tg = window.Telegram.WebApp;
+
+// 获取当前用户的 Telegram 用户名
+const username = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.username : 'unknown';
+
+domains.forEach(domain => {
+    const domainItem = document.createElement('div');
+    domainItem.className = 'domain-item';
+    domainItem.innerHTML = `<span class="${domain.status === 'sold' ? 'sold-domain' : 'buy-domain'}">${domain.name}</span>`;
+
+    if (domain.status === 'available') {
+        domainItem.querySelector('.buy-domain').addEventListener('click', () => {
+            initiatePayment(domain.name, username, '0.1');
+        });
+    }
+
+    domainListElement.appendChild(domainItem);
+});
+
+function initiatePayment(domainName, username, amount) {
+    const walletAddress = "EQCKWpx7cNMpvmcN5ObM5lLUZHZRFKqYA4xmw9jOry0ZsF9M";
+    
+    // 构建 payload
+    const payload = btoa(JSON.stringify({
+        username: username,
+        domain: domainName
+    }));
+    
+    // 构建支付请求
+    const paymentRequest = {
+        "root": {
+            "validUntil": Math.floor(Date.now() / 1000) + 3600, // 有效时间为1小时
+            "messages": [
+                {
+                    "address": walletAddress,
+                    "amount": (parseFloat(amount) * 1e9).toString(), // 转换为 nanoton
+                    "payload": `te6ccsEBAQEADAAMABQAAAAA${payload}`
+                }
+            ]
+        }
+    };
+    
+    // 发送支付请求，调用 TON 钱包
+    tg.sendData(JSON.stringify(paymentRequest));
+    
+    // 这里可以添加其他处理逻辑，例如显示等待支付完成的提示
+    console.log('Payment initiated for:', domainName);
+}
+
+
+import { domains } from './domains.js'; // 引入域名数据
+
+const domainListElement = document.getElementById('domain-list');
 
 domains.forEach(domain => {
     const domainItem = document.createElement('div');
