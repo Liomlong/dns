@@ -1,9 +1,3 @@
-function initiatePayment(domain, amount) {
-    // 这里是你的支付处理逻辑
-    console.log(`Initiating payment for ${domain} with amount ${amount} TON`);
-    // 示例代码，不包括实际支付逻辑
-}
-
 import { domains } from './domains.js'; // 引入域名数据
 
 const domainListElement = document.getElementById('domain-list');
