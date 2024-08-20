@@ -1,3 +1,27 @@
+import { domains } from './domains.js'; // 引入域名数据
+
+const domainListElement = document.getElementById('domain-list');
+
+domains.forEach(domain => {
+    const domainItem = document.createElement('div');
+    domainItem.className = 'domain-item';
+    domainItem.innerHTML = `
+        <span>${domain.name}</span>
+        <button ${domain.status === 'sold' ? 'disabled' : ''} class="btn ${domain.status === 'sold' ? 'btn-sold' : 'btn-buy'}">
+            ${domain.status === 'sold' ? 'Sold' : 'Buy'}
+        </button>
+    `;
+
+    // 如果域名可购买，添加购买事件
+    if (domain.status === 'available') {
+        domainItem.querySelector('.btn-buy').addEventListener('click', () => {
+            initiatePayment(domain.name, 40); // 40 TON
+        });
+    }
+
+    domainListElement.appendChild(domainItem);
+});
+
 window.Telegram.WebApp.ready();
 
 const tg = window.Telegram.WebApp;
@@ -8,14 +32,14 @@ console.log(tg.initDataUnsafe.user);
 // 设置应用程序背景颜色
 tg.setBackgroundColor("#ffffff");
 
-// 设置主按钮（可选）
+/*// 设置主按钮（可选）
 tg.MainButton.text = "Confirm";
 tg.MainButton.show();
 
 tg.MainButton.onClick(() => {
   tg.sendData("Some data here"); // 向 Telegram 发送数据
   tg.close(); // 关闭应用程序
-});
+});*/
 
 //tg小程序
 MS_IN_ONE_LEAP_YEAR = 31622400000

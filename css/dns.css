@@ -3055,3 +3055,47 @@ html[data-theme='dark'] .gg__btn__tertiary .gg__btn__icon {
     background-image: url("../assets/gg_logo_blue_dark.svg");
 }
 /* GG INTEGRATION */
+
+/* 添加域名列表的样式 */
+#domain-list {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.domain-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.domain-item:last-child {
+    border-bottom: none;
+}
+
+.btn-buy {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-buy:hover {
+    background-color: #218838;
+}
+
+.btn-sold {
+    background-color: #ccc;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: not-allowed;
+}
