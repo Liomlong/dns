@@ -3103,9 +3103,20 @@ html[data-theme='dark'] .gg__btn__tertiary .gg__btn__icon {
     border-radius: 8px;
 }
 
+/* 域名列表容器 */
+.domain-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* 设置项之间的间距 */
+    margin-top: 20px;
+    padding: 0;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
 /* 单个域名容器 */
 .domain-item {
-    flex: 1 1 calc(50% - 10px);
+    width: calc(50% - 10px); /* 设置每个域名项的宽度为50%，减去间距 */
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -3138,4 +3149,7 @@ html[data-theme='dark'] .gg__btn__tertiary .gg__btn__icon {
     cursor: not-allowed;
     text-decoration: none;
 }
-
+.domain-item {
+    font-family: "Arial", sans-serif; /* 或者其他与页面一致的字体 */
+    /* 其他样式 */
+}
