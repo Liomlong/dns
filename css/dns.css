@@ -3092,4 +3092,50 @@ html[data-theme='dark'] .gg__btn__tertiary .gg__btn__icon {
     cursor: not-allowed;
     text-decoration: none;
 }
+/* 域名列表容器 */
+.domain-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+    padding: 0;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+/* 单个域名容器 */
+.domain-item {
+    flex: 1 1 calc(50% - 10px);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid #ccc;
+    font-size: 16px;
+    cursor: pointer;
+    font-family: inherit; /* 使用与页面其他部分一致的字体 */
+}
+
+/* 移除最后一行的下边框 */
+.domain-item:nth-last-child(2) ~ .domain-item {
+    border-bottom: none;
+}
+
+/* 可点击的域名 */
+.buy-domain {
+    color: #007bff;
+    text-decoration: none;
+}
+
+/* 鼠标悬停时的样式 */
+.buy-domain:hover {
+    text-decoration: underline;
+}
+
+/* 已售出的域名 */
+.sold-domain {
+    color: #ccc;
+    cursor: not-allowed;
+    text-decoration: none;
+}
 
