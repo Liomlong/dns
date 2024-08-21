@@ -72,7 +72,6 @@ domains.forEach(domain => {
 
 window.Telegram.WebApp.ready();
 
-const tg = window.Telegram.WebApp;
 
 // 获取当前用户信息并打印到控制台
 console.log(tg.initDataUnsafe.user);
