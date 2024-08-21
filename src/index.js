@@ -1,9 +1,8 @@
 const domainListElement = document.getElementById('domain-list');
 
-const tonConnect = new TonConnect();
 
 function initiatePayment(domainName, amount) {
-    const walletAddress = "EQCKWpx7cNMpvmcN5ObM5lLUZHZRFKqYA4xmw9jOry0ZsF9M";
+    const walletAddress = "EQAA5oqBWLaH2Wo1sDLC6tuTe4Ro7Mg3c1yw7tf5r-Pcbgfm";
     
     // 检查钱包连接状态
     const isConnected = tonConnect.connected;
