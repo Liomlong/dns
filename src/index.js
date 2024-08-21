@@ -51,7 +51,7 @@ function initiatePayment(domainName, username, amount) {
 }
 
 
-import { domains } from './domains.js'; // 引入域名数据
+
 
 const domainListElement = document.getElementById('domain-list');
 
