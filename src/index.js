@@ -1,5 +1,42 @@
 const domainListElement = document.getElementById('domain-list');
 
+function initiatePayment(domainName, username, amount) {
+    const walletAddress = "EQCKWpx7cNMpvmcN5ObM5lLUZHZRFKqYA4xmw9jOry0ZsF9M";
+    const tg = window.Telegram.WebApp;
+
+    // 检查用户是否已连接到 TON 钱包
+    if (!tg.initDataUnsafe.user || !tg.initDataUnsafe.user.username) {
+        alert('Please connect your TON wallet first.');
+        return;
+    }
+
+    // 构建 payload
+    const payload = btoa(JSON.stringify({
+        username: username,
+        domain: domainName
+    }));
+    
+    // 构建支付请求
+    const paymentRequest = {
+        "root": {
+            "validUntil": Math.floor(Date.now() / 1000) + 3600, // 有效时间为1小时
+            "messages": [
+                {
+                    "address": walletAddress,
+                    "amount": (parseFloat(amount) * 1e9).toString(), // 转换为 nanoton
+                    "payload": `te6ccsEBAQEADAAMABQAAAAA${payload}`
+                }
+            ]
+        }
+    };
+    
+    // 发送支付请求，调用 TON 钱包
+    tg.sendData(JSON.stringify(paymentRequest));
+    
+    console.log('Payment initiated for:', domainName);
+}
+
+
 // 获取弹出窗口元素
 const modal = document.getElementById('domainModal');
 const modalDomainName = document.getElementById('modal-domain-name');
@@ -69,37 +106,6 @@ domains.forEach(domain => {
 
     domainListElement.appendChild(domainItem);
 });
-
-function initiatePayment(domainName, username, amount) {
-    const walletAddress = "EQCKWpx7cNMpvmcN5ObM5lLUZHZRFKqYA4xmw9jOry0ZsF9M";
-    
-    // 构建 payload
-    const payload = btoa(JSON.stringify({
-        username: username,
-        domain: domainName
-    }));
-    
-    // 构建支付请求
-    const paymentRequest = {
-        "root": {
-            "validUntil": Math.floor(Date.now() / 1000) + 3600, // 有效时间为1小时
-            "messages": [
-                {
-                    "address": walletAddress,
-                    "amount": (parseFloat(amount) * 1e9).toString(), // 转换为 nanoton
-                    "payload": `te6ccsEBAQEADAAMABQAAAAA${payload}`
-                }
-            ]
-        }
-    };
-    
-    // 发送支付请求，调用 TON 钱包
-    tg.sendData(JSON.stringify(paymentRequest));
-    
-    // 这里可以添加其他处理逻辑，例如显示等待支付完成的提示
-    console.log('Payment initiated for:', domainName);
-}
-
 
 
 
