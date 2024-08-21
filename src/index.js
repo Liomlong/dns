@@ -53,7 +53,7 @@ function initiatePayment(domainName, username, amount) {
 
 
 
-const domainListElement = document.getElementById('domain-list');
+
 
 domains.forEach(domain => {
     const domainItem = document.createElement('div');
