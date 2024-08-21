@@ -1,3 +1,53 @@
+// 获取弹出窗口元素
+const modal = document.getElementById('domainModal');
+const modalDomainName = document.getElementById('modal-domain-name');
+const modalDomainPrice = document.getElementById('modal-domain-price');
+const modalUsername = document.getElementById('modal-username');
+const modalBuyButton = document.getElementById('modal-buy-button');
+const closeModal = document.getElementsByClassName('close')[0];
+
+// 获取 Telegram 用户名
+const tg = window.Telegram.WebApp;
+const username = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.username : 'unknown';
+
+// 在点击可用域名时显示弹出窗口
+domains.forEach(domain => {
+    const domainItem = document.createElement('div');
+    domainItem.className = 'domain-item';
+    domainItem.innerHTML = `<span class="${domain.status === 'sold' ? 'sold-domain' : 'buy-domain'}">${domain.name}</span>`;
+
+    if (domain.status === 'available') {
+        domainItem.querySelector('.buy-domain').addEventListener('click', () => {
+            modalDomainName.textContent = domain.name;
+            modalDomainPrice.textContent = '0.1'; // 你可以动态调整价格
+            modalUsername.textContent = '@' + username;
+            
+            // 设置支付按钮的点击事件
+            modalBuyButton.onclick = () => {
+                initiatePayment(domain.name, username, '0.1');
+            };
+            
+            // 显示弹出窗口
+            modal.style.display = 'block';
+        });
+    }
+
+    domainListElement.appendChild(domainItem);
+});
+
+// 关闭弹出窗口
+closeModal.onclick = function() {
+    modal.style.display = 'none';
+}
+
+// 点击窗口外部区域关闭弹出窗口
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = 'none';
+    }
+}
+
+
 import { domains } from './domains.js'; // 引入域名数据
 
 const domainListElement = document.getElementById('domain-list');
