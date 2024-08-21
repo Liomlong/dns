@@ -1,8 +1,7 @@
 const domainListElement = document.getElementById('domain-list');
-
+const tg = window.Telegram.WebApp;
 
 function initiatePayment(domainName, amount) {
-    const walletAddress = "EQAA5oqBWLaH2Wo1sDLC6tuTe4Ro7Mg3c1yw7tf5r-Pcbgfm";
     
     // 检查钱包连接状态
     const isConnected = tonConnect.connected;
