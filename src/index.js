@@ -1,21 +1,27 @@
 const domainListElement = document.getElementById('domain-list');
 
-function initiatePayment(domainName, username, amount) {
-    const walletAddress = "EQCKWpx7cNMpvmcN5ObM5lLUZHZRFKqYA4xmw9jOry0ZsF9M";
-    const tg = window.Telegram.WebApp;
+import TonConnect from '@tonconnect/sdk';
 
-    // 输出用户信息以便调试
-    console.log('User Info:', tg.initDataUnsafe.user);
+const tonConnect = new TonConnect();
+
+function initiatePayment(domainName, amount) {
+    const walletAddress = "EQCKWpx7cNMpvmcN5ObM5lLUZHZRFKqYA4xmw9jOry0ZsF9M";
     
-    // 检查用户信息是否正确获取
-    if (!tg.initDataUnsafe.user || !tg.initDataUnsafe.user.username) {
+    // 检查钱包连接状态
+    const isConnected = tonConnect.connected;
+    
+    if (!isConnected) {
         alert('Please connect your TON wallet first.');
+        tonConnect.connect();
         return;
     }
+    
+    // 获取用户地址
+    const userAddress = tonConnect.account.address;
 
     // 构建 payload
     const payload = btoa(JSON.stringify({
-        username: tg.initDataUnsafe.user.username, // 使用从 Telegram 获取的用户名
+        username: userAddress,
         domain: domainName
     }));
     
@@ -34,9 +40,13 @@ function initiatePayment(domainName, username, amount) {
     };
     
     // 发送支付请求，调用 TON 钱包
-    tg.sendData(JSON.stringify(paymentRequest));
-    
-    console.log('Payment initiated for:', domainName);
+    tonConnect.sendTransaction(paymentRequest)
+        .then(response => {
+            console.log('Payment successful:', response);
+        })
+        .catch(error => {
+            console.error('Payment failed:', error);
+        });
 }
 
 
