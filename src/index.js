@@ -4,7 +4,10 @@ function initiatePayment(domainName, username, amount) {
     const walletAddress = "EQCKWpx7cNMpvmcN5ObM5lLUZHZRFKqYA4xmw9jOry0ZsF9M";
     const tg = window.Telegram.WebApp;
 
-    // 检查用户是否已连接到 TON 钱包
+    // 输出用户信息以便调试
+    console.log('User Info:', tg.initDataUnsafe.user);
+    
+    // 检查用户信息是否正确获取
     if (!tg.initDataUnsafe.user || !tg.initDataUnsafe.user.username) {
         alert('Please connect your TON wallet first.');
         return;
@@ -12,7 +15,7 @@ function initiatePayment(domainName, username, amount) {
 
     // 构建 payload
     const payload = btoa(JSON.stringify({
-        username: username,
+        username: tg.initDataUnsafe.user.username, // 使用从 Telegram 获取的用户名
         domain: domainName
     }));
     
@@ -46,7 +49,6 @@ const modalBuyButton = document.getElementById('modal-buy-button');
 const closeModal = document.getElementsByClassName('close')[0];
 
 // 获取 Telegram 用户名
-const tg = window.Telegram.WebApp;
 const username = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.username : 'unknown';
 
 // 在点击可用域名时显示弹出窗口
