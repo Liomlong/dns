@@ -2,48 +2,50 @@ const domainListElement = document.getElementById('domain-list');
 const tg = window.Telegram.WebApp;
 
 function initiatePayment(domainName, amount) {
-    
+    // 确保TonConnectUI和TonWallet钩子被正确使用
+    const { connected, connect, sendTransaction, account } = useTonWallet();
+
     // 检查钱包连接状态
-    const isConnected = tonConnect.connected;
-    
-    if (!isConnected) {
+    if (!connected) {
         alert('Please connect your TON wallet first.');
-        tonConnect.connect();
+        connect();  // 尝试连接钱包
         return;
     }
-    
-    // 获取用户地址
-    const userAddress = tonConnect.account.address;
 
-    // 构建 payload
-    const payload = btoa(JSON.stringify({
-        username: userAddress,
-        domain: domainName
-    }));
-    
-    // 构建支付请求
+    // 获取用户地址，确保用户地址存在
+    const userAddress = account?.address;
+    if (!userAddress) {
+        alert('Unable to retrieve your wallet address. Please ensure your wallet is connected.');
+        return;
+    }
+
+    // 构建 payload，确保base64编码正确无误
+    const payload = btoa(JSON.stringify({ username: userAddress, domain: domainName }));
+
+    // 构建支付请求，确保有效期和金额单位正确设置
     const paymentRequest = {
         "root": {
             "validUntil": Math.floor(Date.now() / 1000) + 3600, // 有效时间为1小时
-            "messages": [
-                {
-                    "address": walletAddress,
-                    "amount": (parseFloat(amount) * 1e9).toString(), // 转换为 nanoton
-                    "payload": `te6ccsEBAQEADAAMABQAAAAA${payload}`
-                }
-            ]
+            "messages": [{
+                "address": "EQCKWpx7cNMpvmcN5ObM5lLUZHZRFKqYA4xmw9jOry0ZsF9M", // 改为实际接收方地址
+                "amount": (parseFloat(amount) * 1e9).toString(), // TON to nanoTON conversion
+                "payload": `te6ccsEBAQEADAAMABQAAAAA${payload}`
+            }]
         }
     };
-    
+
     // 发送支付请求，调用 TON 钱包
-    tonConnect.sendTransaction(paymentRequest)
+    sendTransaction(paymentRequest)
         .then(response => {
             console.log('Payment successful:', response);
+            alert('Payment successful!');
         })
         .catch(error => {
             console.error('Payment failed:', error);
+            alert(`Payment failed: ${error.message}`);
         });
 }
+
 
 
 // 获取弹出窗口元素
