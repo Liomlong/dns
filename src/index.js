@@ -1,5 +1,6 @@
 const domainListElement = document.getElementById('domain-list');
 const tg = window.Telegram.WebApp;
+import { useTonWallet } from "@tonconnect/ui-react";
 
 function initiatePayment(domainName, amount) {
     // 确保TonConnectUI和TonWallet钩子被正确使用
