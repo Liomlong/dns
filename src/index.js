@@ -1,3 +1,5 @@
+const domainListElement = document.getElementById('domain-list');
+
 // 获取弹出窗口元素
 const modal = document.getElementById('domainModal');
 const modalDomainName = document.getElementById('modal-domain-name');
@@ -50,7 +52,7 @@ window.onclick = function(event) {
 
 import { domains } from './domains.js'; // 引入域名数据
 
-const domainListElement = document.getElementById('domain-list');
+
 
 
 
