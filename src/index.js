@@ -51,7 +51,7 @@ window.onclick = function(event) {
 import { domains } from './domains.js'; // 引入域名数据
 
 const domainListElement = document.getElementById('domain-list');
-const tg = window.Telegram.WebApp;
+
 
 // 获取当前用户的 Telegram 用户名
 const username = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.username : 'unknown';
