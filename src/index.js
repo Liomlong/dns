@@ -1,7 +1,5 @@
 const domainListElement = document.getElementById('domain-list');
 
-import TonConnect from '@tonconnect/sdk';
-
 const tonConnect = new TonConnect();
 
 function initiatePayment(domainName, amount) {
